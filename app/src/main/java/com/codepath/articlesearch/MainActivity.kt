@@ -21,11 +21,11 @@ fun createJson() = Json {
 
 private const val TAG = "MainActivity/"
 private const val SEARCH_API_KEY = BuildConfig.API_KEY
-private const val ARTICLE_SEARCH_URL =
-    "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${SEARCH_API_KEY}"
+private const val SHOW_SEARCH_URL =
+    "https://api.themoviedb.org/3/tv/airing_today?api_key=${SEARCH_API_KEY}"
 
 class MainActivity : AppCompatActivity() {
-    private val articles = mutableListOf<Article>()
+    private val shows = mutableListOf<Show>()
     private lateinit var articlesRecyclerView: RecyclerView
     private lateinit var binding: ActivityMainBinding
 
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         articlesRecyclerView = findViewById(R.id.articles)
         // TODO: Set up ArticleAdapter with articles
-        val articleAdapter = ArticleAdapter(this, articles)
+        val articleAdapter = ArticleAdapter(this, shows)
         articlesRecyclerView.adapter = articleAdapter
 
         articlesRecyclerView.layoutManager = LinearLayoutManager(this).also {
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val client = AsyncHttpClient()
-        client.get(ARTICLE_SEARCH_URL, object : JsonHttpResponseHandler() {
+        client.get(SHOW_SEARCH_URL, object : JsonHttpResponseHandler() {
             override fun onFailure(
                 statusCode: Int,
                 headers: Headers?,
@@ -62,13 +62,14 @@ class MainActivity : AppCompatActivity() {
                 try {
                     // TODO: Create the parsedJSON
                     val parsedJson = createJson().decodeFromString(
-                        SearchNewsResponse.serializer(),
+                        SearchShowsResponse.serializer(),
                         json.jsonObject.toString()
                     )
 
                     // TODO: Do something with the returned json (contains article information)
-                    parsedJson.response?.docs?.let { list ->
-                        articles.addAll(list)
+                    parsedJson.results?.let { list ->
+                        shows.addAll(list)
+
 
                         // TODO: Save the articles and reload the screen
                         articleAdapter.notifyDataSetChanged()

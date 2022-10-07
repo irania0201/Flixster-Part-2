@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">ArticleSearch</string>
+    <string name="app_name">Flixster+ Part 2</string>
+    <string name="rating">Rating:</string>
+    <string name="airdate">First Air Date:</string>
+    <string name="lang">Original Language:</string>
 </resources>

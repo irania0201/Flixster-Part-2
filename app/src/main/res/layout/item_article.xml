@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="200dp"
+    android:padding="3dp" >
 
     <ImageView
-        android:id="@+id/mediaImage"
+        android:id="@+id/showImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerInside"
@@ -15,7 +16,7 @@
         app:layout_constraintWidth_percent=".35" />
 
     <TextView
-        android:id="@+id/mediaTitle"
+        android:id="@+id/showTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -26,22 +27,34 @@
         android:text="Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/mediaImage"
-        app:layout_constraintTop_toTopOf="@+id/mediaImage" />
+        app:layout_constraintStart_toEndOf="@id/showImage"
+        app:layout_constraintTop_toTopOf="@+id/showImage" />
 
     <TextView
-        android:id="@+id/mediaAbstract"
-        android:layout_width="0dp"
+        android:id="@+id/airDate"
+        android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
-        android:ellipsize="end"
-        android:maxLines="4"
-        android:text="Abstract"
-        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+        android:textSize="18sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mediaImage"
-        app:layout_constraintTop_toBottomOf="@+id/mediaTitle" />
+        app:layout_constraintStart_toEndOf="@id/airdate_string"
+        app:layout_constraintTop_toBottomOf="@id/showTitle" />
+
+    <TextView
+        android:id="@+id/airdate_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/airdate"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/showImage"
+        app:layout_constraintTop_toBottomOf="@id/showTitle"
+        app:layout_constraintEnd_toStartOf="@id/airDate"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

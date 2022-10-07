@@ -9,11 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
-const val ARTICLE_EXTRA = "ARTICLE_EXTRA"
+const val SHOW_EXTRA = "SHOW_EXTRA"
 private const val TAG = "ArticleAdapter"
+private const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500/"
 
-class ArticleAdapter(private val context: Context, private val articles: List<Article>) :
+class ArticleAdapter(private val context: Context, private val shows: List<Show>) :
     RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,40 +25,44 @@ class ArticleAdapter(private val context: Context, private val articles: List<Ar
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // TODO: Get the individual article and bind to holder
-        val article = articles[position]
-        holder.bind(article)
+        val show = shows[position]
+        holder.bind(show)
     }
 
-    override fun getItemCount() = articles.size
+    override fun getItemCount() = shows.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
-        private val mediaImageView = itemView.findViewById<ImageView>(R.id.mediaImage)
-        private val titleTextView = itemView.findViewById<TextView>(R.id.mediaTitle)
-        private val abstractTextView = itemView.findViewById<TextView>(R.id.mediaAbstract)
+        private val mediaImageView = itemView.findViewById<ImageView>(R.id.showImage)
+        private val titleTextView = itemView.findViewById<TextView>(R.id.showTitle)
+        private val airdateTextView = itemView.findViewById<TextView>(R.id.airDate)
 
         init {
             itemView.setOnClickListener(this)
         }
 
         // TODO: Write a helper method to help set up the onBindViewHolder method
-        fun bind(article: Article) {
-            titleTextView.text = article.headline?.main
-            abstractTextView.text = article.abstract
+        fun bind(show: Show) {
+            titleTextView.text = show.name
+            airdateTextView.text = show.airDate
 
+            val radius = 30
+            val margin = 10
             Glide.with(context)
-                .load(article.mediaImageUrl)
+                .load(IMAGE_BASE_URL+ show.poster)
+                .centerCrop() // scale image to fill the entire ImageView
+                .transform(RoundedCorners(radius))
                 .into(mediaImageView)
         }
 
         override fun onClick(v: View?) {
             // TODO: Get selected article
-            val article = articles[absoluteAdapterPosition]
+            val show = shows[absoluteAdapterPosition]
 
             // TODO: Navigate to Details screen and pass selected article
             val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra(ARTICLE_EXTRA, article)
+            intent.putExtra(SHOW_EXTRA, show)
             context.startActivity(intent)
         }
     }
